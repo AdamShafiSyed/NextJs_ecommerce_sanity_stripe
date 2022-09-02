@@ -62,8 +62,8 @@ const ProductDetails = ({product, similarProducts}) => {
                 <h2>You may also like</h2>
                 <div className='marquee'>
                     <div className='maylike-products-container track'>
-                        {similarProducts.map((product) => (
-                            <Product key={product._id} product={product} />
+                        {similarProducts.map((item) => (
+                            <Product key={item._id} product={item} />
                         ))}
                     </div>
                 </div>
@@ -95,10 +95,10 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({params: { slug }}) => {
     const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
     const product = await client.fetch(query);
-
-    const similarProductQuery = `*[_type == "product"]`;
-    const similarProducts = await client.fetch(similarProductQuery);
     
+    const similarProductQuery = '*[_type == "product"]';
+    const similarProducts = await client.fetch(similarProductQuery);
+
     return {
       props: {product, similarProducts}
     }
